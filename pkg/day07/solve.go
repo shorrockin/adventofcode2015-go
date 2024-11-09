@@ -19,8 +19,7 @@ func Solve(path string) Wires {
 	for !complete {
 		complete = true
 		for _, op := range operations {
-			local := op.Apply(wires)
-			complete = local && complete
+			complete = op.Apply(wires) && complete
 		}
 	}
 
