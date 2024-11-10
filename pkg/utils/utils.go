@@ -1,9 +1,11 @@
 package utils
 
 import (
+	"adventofcode2015/pkg/assert"
 	"bufio"
 	"log"
 	"os"
+	"strconv"
 )
 
 func MustReadInput(path string) []string {
@@ -32,4 +34,24 @@ func ReadInput(path string) ([]string, error) {
 	}
 
 	return lines, nil
+}
+
+func MustAtoi(raw string) int {
+	value, err := strconv.Atoi(raw)
+	assert.NoError(err, "could not convert value to number", raw)
+	return value
+}
+
+func CopySlice[T any](original []T) []T {
+	copied := make([]T, len(original))
+	copy(copied, original)
+	return copied
+}
+
+func CopyMap[K comparable, V any](original map[K]V) map[K]V {
+	copy := make(map[K]V, len(original))
+	for key, value := range original {
+		copy[key] = value
+	}
+	return copy
 }

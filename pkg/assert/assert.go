@@ -10,7 +10,7 @@ func logAssert(msg string, data ...any) {
 	// TODO: clean this up perhaps?
 	// adventofcode2015.shorrockin.github/pkg/utils perhaps
 	fmt.Fprintf(os.Stderr, "ASSERT:")
-	fmt.Fprintf(os.Stderr, "\tmsg=%s", msg)
+	fmt.Fprintf(os.Stderr, "\tmsg=%s\n", msg)
 
 	for v := range data {
 		fmt.Fprintf(os.Stderr, "\t%v\n", v)
@@ -21,6 +21,13 @@ func logAssert(msg string, data ...any) {
 
 func Assert(truth bool, msg string, data ...any) {
 	if truth {
+		return
+	}
+	logAssert(msg, data...)
+}
+
+func Refute(falsehood bool, msg string, data ...any) {
+	if !falsehood {
 		return
 	}
 	logAssert(msg, data...)
