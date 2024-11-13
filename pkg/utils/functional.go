@@ -55,3 +55,20 @@ func MaxMapValue[K comparable, V constraints.Ordered](input map[K]V) V {
 
 	return best
 }
+
+func MaxValue[T constraints.Ordered](left T, right T) T {
+	if left > right {
+		return left
+	}
+	return right
+}
+
+func Select[T any](input []T, selector func(T) bool) T {
+	for _, value := range input {
+		if selector(value) {
+			return value
+		}
+	}
+	var zero T
+	return zero
+}

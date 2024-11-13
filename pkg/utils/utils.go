@@ -11,7 +11,7 @@ import (
 func MustReadInput(path string) []string {
 	lines, err := ReadInput(path)
 	if err != nil {
-		log.Fatal("Could not ReadInput", err)
+		log.Fatalf("Could not ReadInput: '%v': err: %+v", path, err)
 	}
 	return lines
 }
