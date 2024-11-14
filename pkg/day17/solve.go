@@ -5,27 +5,52 @@ import (
 	"sort"
 )
 
-func Solve(path string, capacity int) int {
-	return solve(parse(path), 0, capacity, 0, 0)
+func Solve(path string, capacity int, partOne bool) int {
+	if partOne {
+		return countContainers(parse(path), 0, capacity, 0, 0)
+	}
+	containers, _ := countMinContainers(parse(path), 0, capacity, 0, 99999, 1, 0)
+	return containers
 }
 
-func solve(containers []int, start int, capacity int, used int, result int) int {
+func countContainers(containers []int, start int, maxCapacity int, capacityUsed int, result int) int {
 	for index := start; index < len(containers); index++ {
-		container := containers[index]
-
-		// no need to keep iterating
-		if used+container > capacity {
+		containerSize := containers[index]
+		if capacityUsed+containerSize > maxCapacity {
 			return result
 		}
-
-		// did we hit capacity? add to result, and keep the loop
-		// going as we may hit a duplicate in following iterations
-		if used+container == capacity {
+		if capacityUsed+containerSize == maxCapacity {
 			result = result + 1
 		}
-		result = solve(containers, index+1, capacity, used+container, result)
+		result = countContainers(containers, index+1, maxCapacity, capacityUsed+containerSize, result)
 	}
 	return result
+}
+
+func countMinContainers(containers []int, start int, maxCapacity int, capacityUsed int, minContainersUsed int, containersUsed int, result int) (int, int) {
+	// we've used more containers than our min containers we
+	// can short circuit
+	if containersUsed > minContainersUsed {
+		return result, minContainersUsed
+	}
+
+	for index := start; index < len(containers); index++ {
+		containerSize := containers[index]
+		if capacityUsed+containerSize > maxCapacity {
+			return result, minContainersUsed
+		}
+		if capacityUsed+containerSize == maxCapacity {
+			if containersUsed < minContainersUsed {
+				minContainersUsed = containersUsed
+				result = 1
+			} else {
+				result = result + 1
+			}
+		}
+
+		result, minContainersUsed = countMinContainers(containers, index+1, maxCapacity, capacityUsed+containerSize, minContainersUsed, containersUsed+1, result)
+	}
+	return result, minContainersUsed
 }
 
 func parse(path string) []int {
