@@ -49,14 +49,6 @@ func Solve(path string, iterations int, partTwo bool) int {
 	}))
 }
 
-func toRune(history History) rune {
-	size := len(history)
-	if history[size-1] {
-		return '#'
-	}
-	return '.'
-}
-
 func parse(path string) grid.Grid[History] {
 	return grid.Parse(utils.MustReadInput(path), func(value rune, x int, y int) History {
 		element := make(map[int]bool)
