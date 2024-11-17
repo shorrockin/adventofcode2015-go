@@ -10,6 +10,17 @@ func Map[T any, K any](data []T, mapper func(T) K) []K {
 	return result
 }
 
+func MapConditional[T any, K any](data []T, mapper func(T) (K, bool)) []K {
+	result := make([]K, 0, len(data))
+	for _, element := range data {
+		value, ok := mapper(element)
+		if ok {
+			result = append(result, value)
+		}
+	}
+	return result
+}
+
 func Uniq[T comparable](input []T) []T {
 	seen := NewSet[T]()
 	var result []T
@@ -63,7 +74,14 @@ func MaxValue[T constraints.Ordered](left T, right T) T {
 	return right
 }
 
-func Select[T any](input []T, selector func(T) bool) T {
+func MinValue[T constraints.Ordered](left T, right T) T {
+	if left < right {
+		return left
+	}
+	return right
+}
+
+func Find[T any](input []T, selector func(T) bool) T {
 	for _, value := range input {
 		if selector(value) {
 			return value
@@ -71,4 +89,25 @@ func Select[T any](input []T, selector func(T) bool) T {
 	}
 	var zero T
 	return zero
+}
+
+func Filter[T any](input []T, selector func(T) bool) []T {
+	out := make([]T, 0)
+	for _, value := range input {
+		if selector(value) {
+			out = append(out, value)
+		}
+	}
+
+	return out
+}
+
+func FilterMap[K comparable, V any](input map[K]V, selector func(key K, value V) bool) map[K]V {
+	out := make(map[K]V)
+	for key, value := range input {
+		if selector(key, value) {
+			out[key] = value
+		}
+	}
+	return out
 }

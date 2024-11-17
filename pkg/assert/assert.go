@@ -54,3 +54,17 @@ func NoError(err error, msg string, data ...any) {
 	data = append(data, err)
 	logAssert(msg, data...)
 }
+
+func False(value bool, msg string, data ...any) {
+	if !value {
+		return
+	}
+	logAssert(msg, data...)
+}
+
+func True(value bool, msg string, data ...any) {
+	if value {
+		return
+	}
+	logAssert(msg, data...)
+}

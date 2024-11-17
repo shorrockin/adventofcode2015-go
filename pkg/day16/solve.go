@@ -57,13 +57,13 @@ func (a Aunt) MatchesPartTwo(properties map[string]int) bool {
 }
 
 func PartOne() int {
-	return utils.Select(parse("input.txt"), func(aunt Aunt) bool {
+	return utils.Find(parse("input.txt"), func(aunt Aunt) bool {
 		return aunt.MatchesPartOne(PROPERTIES)
 	}).id
 }
 
 func PartTwo() int {
-	return utils.Select(parse("input.txt"), func(aunt Aunt) bool {
+	return utils.Find(parse("input.txt"), func(aunt Aunt) bool {
 		return aunt.MatchesPartTwo(PROPERTIES)
 	}).id
 }

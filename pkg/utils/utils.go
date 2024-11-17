@@ -42,6 +42,11 @@ func MustAtoi(raw string) int {
 	return value
 }
 
+func Must[T any](value T, err error) T {
+	assert.NoError(err, "Must passed value with err: %v", err)
+	return value
+}
+
 func CopySlice[T any](original []T) []T {
 	copied := make([]T, len(original))
 	copy(copied, original)
