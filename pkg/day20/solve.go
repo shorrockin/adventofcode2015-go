@@ -14,19 +14,6 @@ func Solve(presentsTarget int, multiplier int, maxHouses int) int {
 	}
 }
 
-func countDeliveries(houseNumber int, presentsPerHouse int, maxDeliveries int) int {
-	presents := (houseNumber * presentsPerHouse)
-	for elf := 1; elf <= (houseNumber / 2); elf++ {
-		if houseNumber%elf == 0 {
-			if (houseNumber / elf) > maxDeliveries {
-				continue
-			}
-			presents += (elf * presentsPerHouse)
-		}
-	}
-	return presents
-}
-
 func sumOfDivisors(houseNumber int, presentsPerHouse int, maxDeliveries int) int {
 	sum := 0
 	sqrt := int(math.Sqrt(float64(houseNumber)))
