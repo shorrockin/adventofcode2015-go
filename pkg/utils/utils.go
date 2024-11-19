@@ -6,6 +6,7 @@ import (
 	"log"
 	"os"
 	"strconv"
+	"strings"
 )
 
 func MustReadInput(path string) []string {
@@ -59,4 +60,21 @@ func CopyMap[K comparable, V any](original map[K]V) map[K]V {
 		copy[key] = value
 	}
 	return copy
+}
+
+func Indexes(value string, target string) []int {
+	indexes := []int{}
+	offset := 0
+
+	for {
+		index := strings.Index(value[offset:], target)
+		if index == -1 {
+			break
+		}
+
+		indexes = append(indexes, offset+index)
+		offset = offset + index + 1
+	}
+
+	return indexes
 }
