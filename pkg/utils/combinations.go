@@ -6,9 +6,7 @@ func Combinations[T any](data []T, size int) [][]T {
 	var helper func(start int, current []T)
 	helper = func(start int, current []T) {
 		if len(current) == size {
-			tmp := make([]T, len(current))
-			copy(tmp, current)
-			result = append(result, tmp)
+			result = append(result, current)
 			return
 		}
 
