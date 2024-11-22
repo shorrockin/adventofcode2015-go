@@ -111,3 +111,10 @@ func FilterMap[K comparable, V any](input map[K]V, selector func(key K, value V)
 	}
 	return out
 }
+
+func Reduce[T any, K any](input []T, initial K, reducer func(current K, next T) K) K {
+	for _, value := range input {
+		initial = reducer(initial, value)
+	}
+	return initial
+}
